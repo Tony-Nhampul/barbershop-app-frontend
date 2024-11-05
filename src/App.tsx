@@ -1,10 +1,16 @@
+import { BrowserRouter } from "react-router-dom";
+import { MyRoutes } from "./routes";
+import { Toaster } from "./components/ui/toaster";
+import { ThemeProvider } from "./components/theme-provider";
+
 function App() {
   return (
-    <>
-      <h1 className="text-center w-full text-2xl font-bold text-gray-600">
-        Barbershop App
-      </h1>
-    </>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <BrowserRouter>
+        <MyRoutes />
+        <Toaster />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 
