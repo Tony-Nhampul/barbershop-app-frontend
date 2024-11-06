@@ -2,6 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import { MyRoutes } from "./routes";
 import { Toaster } from "./components/ui/toaster";
 import { ThemeProvider } from "./components/theme-provider";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <BrowserRouter>
         <MyRoutes />
         <Toaster />
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );
