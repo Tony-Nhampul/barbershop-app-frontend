@@ -3,6 +3,7 @@ import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import { StarIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 interface BarbershopItemProps {
   barbershop: {
@@ -67,8 +68,9 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
             className={`w-full mt-3 ${
               theme == "light" ? "bg-gray-300 rounded" : ""
             }`}
+            asChild
           >
-            Reservar
+            <Link to={`/barbershop/${barbershop.barbershop.id}`}>Reservar</Link>
           </Button>
         </div>
       </CardContent>

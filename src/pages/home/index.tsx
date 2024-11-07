@@ -3,15 +3,16 @@ import Header from "../../components/Header";
 import { ptBR } from "date-fns/locale";
 import Search from "./Search";
 import BookingItem from "@/components/Booking-item";
-import { useBarbershop } from "@/hooks/pages/useBarbershop";
+import { useBarbershop } from "@/hooks/pages/useBarbershops";
 import BarbershopItem from "./Barbershop-item";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 
 const Home = () => {
-  const { barbershops } = useBarbershop();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const { barbershops, loading } = useBarbershop();
+  const recomendadosRef = useRef<HTMLDivElement>(null);
+  const popularesRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
 
   return (
@@ -52,14 +53,14 @@ const Home = () => {
               theme == "light" ? "bg-slate-400 text-white" : "bg-black"
             }`}
             onClick={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft -= 300;
+              if (recomendadosRef.current) {
+                recomendadosRef.current.scrollLeft -= 300;
               }
             }}
           />
 
           <div
-            ref={containerRef}
+            ref={recomendadosRef}
             className="flex gap-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden "
           >
             {barbershops.map((barbershop, index) => (
@@ -72,8 +73,8 @@ const Home = () => {
               theme == "light" ? "bg-slate-400 text-white" : "bg-black"
             }`}
             onClick={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft += 300;
+              if (recomendadosRef.current) {
+                recomendadosRef.current.scrollLeft += 300;
               }
             }}
           />
@@ -92,14 +93,14 @@ const Home = () => {
               theme == "light" ? "bg-slate-400 text-white" : "bg-black"
             }`}
             onClick={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft -= 300;
+              if (popularesRef.current) {
+                popularesRef.current.scrollLeft -= 300;
               }
             }}
           />
 
           <div
-            ref={containerRef}
+            ref={popularesRef}
             className="flex gap-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden "
           >
             {barbershops.map((barbershop, index) => (
@@ -112,8 +113,8 @@ const Home = () => {
               theme == "light" ? "bg-slate-400 text-white" : "bg-black"
             }`}
             onClick={() => {
-              if (containerRef.current) {
-                containerRef.current.scrollLeft += 300;
+              if (popularesRef.current) {
+                popularesRef.current.scrollLeft += 300;
               }
             }}
           />
