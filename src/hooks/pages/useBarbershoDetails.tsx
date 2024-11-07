@@ -7,10 +7,18 @@ interface useBarbershopDetailsProps {
   id: number;
 }
 
+interface Service {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+}
 interface BarbershopDetails {
   name: string;
   address: string;
   image_url: string;
+  services: Service[];
 }
 
 export function useBarbershopDetails(props: useBarbershopDetailsProps) {
