@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import React from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { namePersistAuth } from "@/config/constants";
 // import { sleep } from "../../helpers";
@@ -25,9 +25,19 @@ const formSchema = z.object({
 });
 
 export function useLogin() {
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  const [logedIn] = useState(() => {
+    const savedLogedIn = sessionStorage.getItem("logedIn");
+    return savedLogedIn ? JSON.parse(savedLogedIn) : false;
+  });
+
+  const [logedUser] = useState(() => {
+    const logedUser = sessionStorage.getItem(namePersistAuth);
+    return logedUser ? JSON.parse(logedUser) : "";
+  });
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,16 +60,18 @@ export function useLogin() {
       });
 
       sessionStorage.setItem(namePersistAuth, JSON.stringify(response.data));
+      sessionStorage.setItem("logedIn", JSON.stringify(true));
 
       setTimeout(() => {
-        navigate("/products");
+        navigate("/");
       }, 500);
     } catch (error) {
       console.log(error);
       //alert("Credentials invalid");
       const axioError = error as AxiosError<APIErrorResponse>;
       const message =
-        axioError.response?.data?.message || "An unexpected error occurred.";
+        axioError.response?.data?.message ||
+        "Ocorreu um Erro durante o Início da Sessão.";
 
       toast({
         variant: "destructive",
@@ -72,5 +84,5 @@ export function useLogin() {
     }
   };
 
-  return { loading, form, onSubmit };
+  return { loading, form, onSubmit, logedIn, logedUser };
 }

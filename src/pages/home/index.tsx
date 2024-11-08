@@ -8,19 +8,21 @@ import BarbershopItem from "./Barbershop-item";
 import { useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
+import { useLogin } from "@/hooks/pages/useLogin";
 
 const Home = () => {
-  const { barbershops, loading } = useBarbershop();
+  const { barbershops } = useBarbershop();
   const recomendadosRef = useRef<HTMLDivElement>(null);
   const popularesRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
+  const { logedUser } = useLogin();
 
   return (
     <div>
       <Header />
 
       <div className="px-5 pt-5 space-y-1">
-        <h2 className="text-xl font-bold">Olá Miguel</h2>
+        <h2 className="text-xl font-bold">Olá {logedUser.name}</h2>
         <p className="capitalize text-sm">
           {format(new Date(), "EEEE',' dd 'de' MMMM", {
             locale: ptBR,

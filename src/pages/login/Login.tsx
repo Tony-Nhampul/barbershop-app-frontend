@@ -13,13 +13,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useTheme } from "@/components/theme-provider";
 
 export function Login() {
   const { loading, form, onSubmit } = useLogin();
+  const { theme } = useTheme();
 
   return (
     <div className="flex items-center justify-center absolute right-0 top-0 w-full h-full">
-      <div className="py-8 px-5 max-w-[450px]  mx-auto space-y-6 border rounded-lg shadow-lg shadow-gray-500/40">
+      <div
+        className={`py-8 px-5 max-w-[450px]  mx-auto space-y-6 border rounded-lg shadow-lg shadow-gray-500/40 ${
+          theme == "light" ? "border-gray-300 rounded" : ""
+        }`}
+      >
         <div className="text-center">
           <h5 className="text-xl font-bold">Inicie a Sessão no Sistema.</h5>
           <p className="text-sm">
@@ -38,7 +44,13 @@ export function Login() {
                 name="email"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-black">Email</FormLabel>
+                    <FormLabel
+                      className={`${
+                        theme == "light" ? "text-black" : "text-white"
+                      }`}
+                    >
+                      Email
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="email"
@@ -61,7 +73,13 @@ export function Login() {
                 name="password"
                 render={({ field }) => (
                   <FormItem className="w-full">
-                    <FormLabel className="text-black">Password</FormLabel>
+                    <FormLabel
+                      className={`${
+                        theme == "light" ? "text-black" : "text-white"
+                      }`}
+                    >
+                      Password
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -79,7 +97,15 @@ export function Login() {
                 )}
               />
 
-              <Button type="submit" disabled={loading}>
+              <Button
+                type="submit"
+                disabled={loading}
+                className={`${
+                  theme === "light"
+                    ? "border-[1px] border-gray-300 bg-[#8161ff] text-white rounded hover:bg-[#613cf3]"
+                    : ""
+                }`}
+              >
                 {loading ? (
                   <Loader />
                 ) : (

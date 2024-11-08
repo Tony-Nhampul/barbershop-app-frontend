@@ -10,7 +10,7 @@ export function PrivateRoute({ children }: PrivateRouteProps) {
     JSON.parse(sessionStorage.getItem(namePersistAuth) as string) || {};
 
   if (!authUser?.token) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
 
   return <>{children}</>;

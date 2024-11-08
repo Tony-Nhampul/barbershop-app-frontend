@@ -10,7 +10,7 @@ function App() {
       <BrowserRouter>
         <MyRoutes />
         <Toaster />
-        <Footer />
+        {location.pathname !== "/login" && <Footer />}
       </BrowserRouter>
     </ThemeProvider>
   );
