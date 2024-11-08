@@ -1,13 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MenuIcon } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
-import { useTheme } from "@/components/theme-provider";
 import { useLogin } from "@/hooks/pages/useLogin";
 import Logout from "./logout";
+import SideMenu from "./SideMenu";
 
 const Header = () => {
-  const { theme } = useTheme();
   const { logedIn } = useLogin();
 
   //console.log(loading);
@@ -30,13 +27,7 @@ const Header = () => {
 
             <ModeToggle />
 
-            <Button
-              variant={"outline"}
-              size={"icon"}
-              className={theme == "light" ? "border-gray-300 rounded" : ""}
-            >
-              <MenuIcon />
-            </Button>
+            <SideMenu />
           </div>
         </CardContent>
       </Card>

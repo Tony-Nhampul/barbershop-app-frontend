@@ -37,8 +37,8 @@ export const MyRoutes = () => {
         path="*"
         element={
           <h1 className="flex items-center justify-center absolute right-0 top-0 w-full h-full text-2xl font-bold text-gray-500">
-            Not Found Route
-            {/*<Navigate to="/" />*/}
+            {/*Not Found Route*/}
+            {<Navigate to="/" />}
           </h1>
         }
       />

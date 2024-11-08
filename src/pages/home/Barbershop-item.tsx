@@ -66,7 +66,7 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
           <Button
             variant={"secondary"}
             className={`w-full mt-3 ${
-              theme == "light" ? "bg-gray-300 rounded" : ""
+              theme == "light" ? "bg-gray-300 rounded hover:bg-gray-400" : ""
             }`}
             asChild
           >

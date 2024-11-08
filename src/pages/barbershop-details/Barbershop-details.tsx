@@ -2,9 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBarbershopDetails } from "@/hooks/pages/useBarbershoDetails";
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
+import { ChevronLeftIcon, MapPinIcon, StarIcon } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import ServicesItem from "./services-item";
+import SideMenu from "@/components/SideMenu";
 
 const BarbershopDetails = () => {
   const { id } = useParams<{ id: string }>(); //Garante que o TypeScript conhece o tipo exato do parâmetro, reduzindo o risco de erros de tipo de dado.
@@ -39,22 +40,28 @@ const BarbershopDetails = () => {
             <Button
               size={"icon"}
               variant={"outline"}
-              className="z-10 absolute top-4 left-4"
+              className={`z-10 absolute top-4 left-4 ${
+                theme == "light"
+                  ? "bg-gray-100 hover:bg-gray-100 border-gray-300 rounded"
+                  : ""
+              }`}
               onClick={handleBackClick}
             >
               <ChevronLeftIcon />
             </Button>
 
-            <Button
-              size={"icon"}
-              variant={"outline"}
-              className="z-10 absolute top-4 right-4"
-            >
-              <MenuIcon />
-            </Button>
+            <div className="z-10 absolute top-4 right-4">
+              <SideMenu />
+            </div>
           </div>
 
-          <div className="px-5 pt-3 pb-6 border-b border-solid border-secondary">
+          <div
+            className={`px-5 pt-3 pb-6  ${
+              theme == "light"
+                ? "border-b border-gray-300"
+                : "border-b border-solid border-secondary"
+            }`}
+          >
             <h1 className="text-xl font-bold">{barbershopDetails?.name}</h1>
 
             <div className="flex items-center gap-2 mt-2">
@@ -81,7 +88,7 @@ const BarbershopDetails = () => {
         //)
       )}
 
-      <div className="px-4 flex flex-col gap-4 py-6">
+      <div className={"px-4 flex flex-col gap-4 py-6"}>
         {barbershopDetails?.services.map((service, index) => (
           <ServicesItem key={index} service={service} />
         ))}

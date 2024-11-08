@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useTheme } from "@/components/theme-provider";
 
 interface servicesItemProps {
   service: {
@@ -12,8 +13,10 @@ interface servicesItemProps {
 }
 
 const ServicesItem = (service: servicesItemProps) => {
+  const { theme } = useTheme();
+
   return (
-    <Card>
+    <Card className={`${theme == "light" ? "border-gray-300 rounded" : ""}`}>
       <CardContent className="p-3">
         <div className="flex items-center gap-4">
           {/*<div className="relative h-[110px] w-[110px]">
@@ -39,13 +42,26 @@ const ServicesItem = (service: servicesItemProps) => {
             </p>
 
             <div className="flex items-center justify-between mt-3">
-              <p className="text-primary text-sm font-bold">
+              <p
+                className={`text-primary text-sm font-bold ${
+                  theme == "light" ? "text-[#8161ff]" : ""
+                }`}
+              >
                 {Intl.NumberFormat("pt-MZ", {
                   style: "currency",
                   currency: "MZN",
                 }).format(service.service.price)}
               </p>
-              <Button variant={"secondary"}>Reservar</Button>
+              <Button
+                variant={"secondary"}
+                className={`${
+                  theme == "light"
+                    ? "bg-gray-300 rounded hover:bg-gray-400"
+                    : ""
+                }`}
+              >
+                Reservar
+              </Button>
             </div>
           </div>
         </div>
