@@ -1,0 +1,11 @@
+.space-y-4.rdp-caption_start.rdp-caption_end {
+  width: 100%;
+}
+
+.light .rdp-day_selected,
+.dark .rdp-day_selected {
+  border: 1px solid gray;
+  background-color: #8161ff !important;
+  color: white;
+  border-radius: 0.25rem;
+}

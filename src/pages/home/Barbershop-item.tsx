@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
-import { StarIcon } from "lucide-react";
+import { MapPin, StarIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 
@@ -60,6 +60,12 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
             {barbershop.barbershop.name}
           </h2>
           <p className="font-sm text-gray-400 overflow-hidden text-ellipsis text-nowrap">
+            <MapPin
+              size={13}
+              className={`inline-block mr-1 mb-1 text-primary ${
+                theme == "light" ? "text-[#8161ff]" : ""
+              }`}
+            />
             {barbershop.barbershop.address}
           </p>
 

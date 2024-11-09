@@ -19,6 +19,7 @@ import { Link } from "react-router-dom";
 import { useLogin } from "@/hooks/pages/useLogin";
 import { useLogout } from "@/hooks/pages/useLogout";
 import { useTheme } from "./theme-provider";
+import { ModeToggle } from "./mode-toggle";
 
 const SideMenu = () => {
   const { logedIn, logedUser } = useLogin();
@@ -53,7 +54,7 @@ const SideMenu = () => {
             }`}
           >
             <SheetTitle
-              className={`text-primary font-bold ${
+              className={`text-left text-primary font-bold ${
                 theme == "light" ? "text-[#8161ff]" : ""
               }`}
             >
@@ -151,6 +152,8 @@ const SideMenu = () => {
                 </Link>
               </Button>
             )}
+
+            <ModeToggle />
           </div>
         </SheetContent>
       </Sheet>

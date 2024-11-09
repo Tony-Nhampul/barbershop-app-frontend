@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/home";
+import Home from "@/pages/home";
 import { PrivateRoute } from "./PrivateRoute";
 import { PublicRoute } from "./PublicRoute";
 import BarbershopDetails from "@/pages/barbershop-details/Barbershop-details";
 import { Navigate } from "react-router-dom";
-import { Login } from "@/pages/login/Login";
+import { Login } from "@/pages/login";
+import Bookings from "@/pages/bookings";
 
 export const MyRoutes = () => {
   return (
@@ -20,9 +21,9 @@ export const MyRoutes = () => {
       <Route
         path="/barbershop/:id"
         element={
-          <PrivateRoute>
+          <>
             <BarbershopDetails />
-          </PrivateRoute>
+          </>
         }
       />
       <Route
@@ -31,6 +32,15 @@ export const MyRoutes = () => {
           <PublicRoute>
             <Login />
           </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/bookings"
+        element={
+          <PrivateRoute>
+            <Bookings />
+          </PrivateRoute>
         }
       />
       <Route

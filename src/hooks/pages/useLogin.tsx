@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { namePersistAuth } from "@/config/constants";
 // import { sleep } from "../../helpers";
 import { api } from "@/services/api";
@@ -28,10 +28,12 @@ export function useLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const [logedIn] = useState(() => {
     const savedLogedIn = sessionStorage.getItem("logedIn");
-    return savedLogedIn ? JSON.parse(savedLogedIn) : false;
+    return savedLogedIn ? savedLogedIn : false;
   });
 
   const [logedUser] = useState(() => {
@@ -63,7 +65,8 @@ export function useLogin() {
       sessionStorage.setItem("logedIn", JSON.stringify(true));
 
       setTimeout(() => {
-        navigate("/");
+        //navigate("/");
+        navigate(from);
       }, 500);
     } catch (error) {
       console.log(error);

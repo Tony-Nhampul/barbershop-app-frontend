@@ -6,15 +6,14 @@ import BookingItem from "@/components/Booking-item";
 import { useBarbershop } from "@/hooks/pages/useBarbershops";
 import BarbershopItem from "./Barbershop-item";
 import { useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useTheme } from "@/components/theme-provider";
 import { useLogin } from "@/hooks/pages/useLogin";
+import ChevronLeft from "@/components/Chevron-left";
+import ChevronRight from "@/components/Chevron-right";
 
 const Home = () => {
   const { barbershops } = useBarbershop();
   const recomendadosRef = useRef<HTMLDivElement>(null);
   const popularesRef = useRef<HTMLDivElement>(null);
-  const { theme } = useTheme();
   const { logedUser } = useLogin();
 
   return (
@@ -50,16 +49,7 @@ const Home = () => {
         </h2>
 
         <div className="relative flex items-center">
-          <ChevronLeft
-            className={`absolute left-[-15px] z-10 bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center shadow cursor-pointer ${
-              theme == "light" ? "bg-slate-400 text-white" : "bg-black"
-            }`}
-            onClick={() => {
-              if (recomendadosRef.current) {
-                recomendadosRef.current.scrollLeft -= 300;
-              }
-            }}
-          />
+          <ChevronLeft scrollRef={recomendadosRef} leftPosition={-15} />
 
           <div
             ref={recomendadosRef}
@@ -70,16 +60,7 @@ const Home = () => {
             ))}
           </div>
 
-          <ChevronRight
-            className={`absolute right-[-15px] z-10 bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center shadow cursor-pointer ${
-              theme == "light" ? "bg-slate-400 text-white" : "bg-black"
-            }`}
-            onClick={() => {
-              if (recomendadosRef.current) {
-                recomendadosRef.current.scrollLeft += 300;
-              }
-            }}
-          />
+          <ChevronRight scrollRef={recomendadosRef} rightPosition={-15} />
         </div>
       </div>
       {/* Recomendados */}
@@ -90,16 +71,7 @@ const Home = () => {
         </h2>
 
         <div className="relative flex items-center">
-          <ChevronLeft
-            className={`absolute left-[-15px] z-10 bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center shadow cursor-pointer ${
-              theme == "light" ? "bg-slate-400 text-white" : "bg-black"
-            }`}
-            onClick={() => {
-              if (popularesRef.current) {
-                popularesRef.current.scrollLeft -= 300;
-              }
-            }}
-          />
+          <ChevronLeft scrollRef={popularesRef} leftPosition={-15} />
 
           <div
             ref={popularesRef}
@@ -110,16 +82,7 @@ const Home = () => {
             ))}
           </div>
 
-          <ChevronRight
-            className={`absolute right-[-15px] z-10 bg-opacity-50 rounded-full w-8 h-8 flex items-center justify-center shadow cursor-pointer ${
-              theme == "light" ? "bg-slate-400 text-white" : "bg-black"
-            }`}
-            onClick={() => {
-              if (popularesRef.current) {
-                popularesRef.current.scrollLeft += 300;
-              }
-            }}
-          />
+          <ChevronRight scrollRef={popularesRef} rightPosition={-15} />
         </div>
       </div>
       {/* Populares */}

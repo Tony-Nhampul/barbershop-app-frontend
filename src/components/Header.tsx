@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useLogin } from "@/hooks/pages/useLogin";
-import Logout from "./logout";
+import Logout from "./Logout";
 import SideMenu from "./SideMenu";
 
 const Header = () => {

@@ -67,8 +67,8 @@ const BarbershopDetails = () => {
             <div className="flex items-center gap-2 mt-2">
               <MapPinIcon
                 size={18}
-                className={`text-primary ${
-                  theme == "light" ? "text-[#8161ff]" : ""
+                className={`${
+                  theme == "light" ? "text-[#8161ff]" : "text-primary "
                 }`}
               />
               <p className="text-sm">{barbershopDetails?.address}</p>
@@ -77,8 +77,10 @@ const BarbershopDetails = () => {
             <div className="flex items-center gap-2 mt-2">
               <StarIcon
                 size={18}
-                className={`fill-primary text-primary ${
-                  theme == "light" ? "fill-[#8161ff] text-[#8161ff]" : ""
+                className={`${
+                  theme == "light"
+                    ? "fill-[#8161ff] text-[#8161ff]"
+                    : "fill-primary text-primary"
                 }`}
               />
               <p className="text-sm">5,0 (889 Avalações) </p>
@@ -90,7 +92,12 @@ const BarbershopDetails = () => {
 
       <div className={"px-4 flex flex-col gap-4 py-6"}>
         {barbershopDetails?.services.map((service, index) => (
-          <ServicesItem key={index} service={service} />
+          <ServicesItem
+            key={index}
+            service={service}
+            barbershopId={Number(id)}
+            barbershopName={barbershopDetails.name}
+          />
         ))}
       </div>
     </>
