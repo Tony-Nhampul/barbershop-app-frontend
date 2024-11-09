@@ -15,11 +15,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { useMemo, useRef, useState } from "react";
 import "./custom-calendar.css";
 import { ptBR } from "date-fns/locale";
-import { addDays, format } from "date-fns";
+import { addDays, format, setHours, setMinutes } from "date-fns";
 import "./custom-calendar.css";
 import { generateDayTimeList } from "@/helpers/hours";
 import ChevronLeft from "@/components/Chevron-left";
 import ChevronRight from "@/components/Chevron-right";
+import { useBooking } from "@/hooks/pages/useBooking";
+import Loader from "@/components/Loader";
+import { SaveIcon } from "lucide-react";
 
 interface servicesItemProps {
   service: {
@@ -35,11 +38,19 @@ interface servicesItemProps {
 
 const ServicesItem = (props: servicesItemProps) => {
   const { theme } = useTheme();
-  const { logedIn } = useLogin();
+  const { logedIn, logedUser } = useLogin();
   const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const timeListRef = useRef<HTMLDivElement>(null);
   const [hour, setHour] = useState<string | undefined>();
+  const timeListRef = useRef<HTMLDivElement>(null);
+  const { loading, handleSaveBooking } = useBooking();
+  const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false);
+
+  const handleBookingSuccess = () => {
+    setDate(undefined);
+    setHour(undefined);
+    setBookingSheetIsOpen(false);
+  };
 
   const handleBookingClick = () => {
     if (!logedIn) {
@@ -61,6 +72,7 @@ const ServicesItem = (props: servicesItemProps) => {
     setDate(date);
     setHour(undefined);
   };
+
   return (
     <Card className={`${theme == "light" ? "border-gray-300 rounded" : ""}`}>
       <CardContent className="p-3">
@@ -97,7 +109,10 @@ const ServicesItem = (props: servicesItemProps) => {
                 }).format(props.service.price)}
               </p>
 
-              <Sheet>
+              <Sheet
+                open={bookingSheetIsOpen}
+                onOpenChange={setBookingSheetIsOpen}
+              >
                 <SheetTrigger asChild>
                   <Button
                     variant={"secondary"}
@@ -253,9 +268,36 @@ const ServicesItem = (props: servicesItemProps) => {
                           ? "border-[1px] border-gray-300 bg-[#8161ff] text-white rounded hover:bg-[#613cf3]"
                           : ""
                       }`}
-                      disabled={!hour || !date}
+                      disabled={!hour || !date || loading}
+                      onClick={() => {
+                        const dateHour = Number(hour?.split(":")[0]);
+                        const dateMinutes = Number(hour?.split(":")[1]);
+                        const newDate = format(
+                          setMinutes(
+                            setHours(date as Date, dateHour),
+                            dateMinutes
+                          ),
+                          "yyyy-MM-dd HH:mm:ss"
+                        );
+
+                        handleSaveBooking(
+                          {
+                            barbershopId: props.barbershopId,
+                            serviceId: props.service.id,
+                            userId: logedUser.id,
+                            date: newDate,
+                          },
+                          handleBookingSuccess
+                        );
+                      }}
                     >
-                      Confirmar Reserva
+                      {loading ? (
+                        <Loader />
+                      ) : (
+                        <>
+                          {<SaveIcon className="w-4 h-4" />} Confirmar Reserva
+                        </>
+                      )}
                     </Button>
                   </SheetFooter>
                 </SheetContent>
