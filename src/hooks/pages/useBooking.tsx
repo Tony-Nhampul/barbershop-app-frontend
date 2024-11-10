@@ -13,18 +13,23 @@ interface APIErrorResponse {
 }
 
 interface useBookingProps {
-  barbershopId: number;
-  serviceId: number;
-  userId: number;
+  barbershop_id: number;
+  service_id: number;
+  user_id: number;
   date: Date | string;
 }
 
 export function useBooking() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [bookingsOfTheDay, setBookingsOfTheDay] = useState<useBookingProps[]>(
+    []
+  );
+  const [bookings, setBookings] = useState<useBookingProps[]>([]);
+  const [bookingsLoading, setBookingsLoading] = useState(false);
 
   const handleSaveBooking = async (
-    { barbershopId, serviceId, userId, date }: useBookingProps,
+    { barbershop_id, service_id, user_id, date }: useBookingProps,
     onSuccess: () => void //Callback for the function
   ) => {
     try {
@@ -33,9 +38,9 @@ export function useBooking() {
       await sleep(1000);
 
       const response = await api.post("/booking", {
-        barbershop_id: barbershopId,
-        service_id: serviceId,
-        user_id: userId,
+        barbershop_id: barbershop_id,
+        service_id: service_id,
+        user_id: user_id,
         date: date,
       });
       const message = response.data.message;
@@ -79,5 +84,48 @@ export function useBooking() {
     }
   };
 
-  return { loading, handleSaveBooking };
+  const getBookingsOfTheDay = async (
+    date: Date | string,
+    barbershop_id: number
+  ) => {
+    try {
+      setBookingsLoading(true);
+      //await sleep(1000);
+
+      const response = await api.post("/bookingsOfTheDay", {
+        date: date,
+        barbershop_id: barbershop_id,
+      });
+      setBookingsOfTheDay(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setBookingsLoading(false);
+    }
+  };
+
+  const getBookings = async (user_id: number) => {
+    try {
+      setLoading(true);
+      //await sleep(1000);
+
+      const response = await api.get(`/bookings/${user_id}`);
+      setBookings(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //console.log(bookings);
+  return {
+    loading,
+    handleSaveBooking,
+    getBookingsOfTheDay,
+    bookingsOfTheDay,
+    bookingsLoading,
+    getBookings,
+    bookings,
+  };
 }

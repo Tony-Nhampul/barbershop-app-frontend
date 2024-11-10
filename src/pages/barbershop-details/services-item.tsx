@@ -32,7 +32,7 @@ interface servicesItemProps {
     price: number;
     image_url: string;
   };
-  barbershopId: number;
+  barbershop_id: number;
   barbershopName: string;
 }
 
@@ -43,7 +43,13 @@ const ServicesItem = (props: servicesItemProps) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
   const timeListRef = useRef<HTMLDivElement>(null);
-  const { loading, handleSaveBooking } = useBooking();
+  const {
+    loading,
+    handleSaveBooking,
+    getBookingsOfTheDay,
+    bookingsOfTheDay,
+    bookingsLoading,
+  } = useBooking();
   const [bookingSheetIsOpen, setBookingSheetIsOpen] = useState(false);
 
   const handleBookingSuccess = () => {
@@ -55,14 +61,10 @@ const ServicesItem = (props: servicesItemProps) => {
   const handleBookingClick = () => {
     if (!logedIn) {
       navigate("/login", {
-        state: { from: `/barbershop/${props.barbershopId}` },
+        state: { from: `/barbershop/${props.barbershop_id}` },
       });
     }
   };
-
-  const serviceTimeList = useMemo(() => {
-    return date ? generateDayTimeList(date) : [];
-  }, [date]);
 
   const handleHourClick = (time: string) => {
     setHour(time);
@@ -71,7 +73,39 @@ const ServicesItem = (props: servicesItemProps) => {
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
     setHour(undefined);
+
+    getBookingsOfTheDay(
+      format(date as Date, "yyyy-MM-dd"),
+      props.barbershop_id
+    );
   };
+
+  const serviceTimeList = useMemo(() => {
+    if (!date) {
+      return [];
+    }
+
+    return generateDayTimeList(date).filter((time) => {
+      //Filtering the Bookings, so that don't display already saved booking time
+
+      const timeHour = Number(time.split(":")[0]);
+      const timeMinutes = Number(time.split(":")[1]);
+
+      const booking = bookingsOfTheDay.find((booking) => {
+        const bookingDate = new Date(booking.date); // Ensure booking.date is a Date object
+        const bookingHour = bookingDate.getHours();
+        const bookingMinutes = bookingDate.getMinutes();
+
+        return bookingHour == timeHour && bookingMinutes == timeMinutes;
+      });
+
+      if (!booking) {
+        return true;
+      }
+
+      return false;
+    });
+  }, [date, bookingsOfTheDay]);
 
   return (
     <Card className={`${theme == "light" ? "border-gray-300 rounded" : ""}`}>
@@ -184,32 +218,50 @@ const ServicesItem = (props: servicesItemProps) => {
                           : "border-y border-solid border-secondary"
                       }`}
                     >
-                      <ChevronLeft scrollRef={timeListRef} leftPosition={0} />
+                      <ChevronLeft
+                        scrollRef={timeListRef}
+                        leftPosition={0}
+                        scrollSpeed={200}
+                      />
                       <div className="px-8 w-full">
                         <div
                           ref={timeListRef}
                           className={`py-6 flex overflow-x-auto gap-3 scroll-smooth [&::-webkit-scrollbar]:hidden `}
                         >
-                          {serviceTimeList.map((time) => (
-                            <Button
-                              key={time}
-                              variant={hour === time ? "default" : "outline"}
-                              className={`${
-                                theme === "light"
-                                  ? "border-[1px] border-gray-300 rounded-xl hover:bg-[#8161ff]"
-                                  : ""
-                              } ${
-                                hour === time ? "bg-[#8161ff] text-white" : ""
-                              }`}
-                              onClick={() => handleHourClick(time)}
-                            >
-                              {time}
-                            </Button>
-                          ))}
+                          {bookingsLoading ? (
+                            <Loader />
+                          ) : (
+                            <>
+                              {serviceTimeList.map((time) => (
+                                <Button
+                                  key={time}
+                                  variant={
+                                    hour === time ? "default" : "outline"
+                                  }
+                                  className={`${
+                                    theme === "light"
+                                      ? "border-[1px] border-gray-300 rounded-xl hover:bg-[#8161ff]"
+                                      : ""
+                                  } ${
+                                    hour === time
+                                      ? "bg-[#8161ff] text-white"
+                                      : ""
+                                  }`}
+                                  onClick={() => handleHourClick(time)}
+                                >
+                                  {time}
+                                </Button>
+                              ))}
+                            </>
+                          )}
                         </div>
                       </div>
 
-                      <ChevronRight scrollRef={timeListRef} rightPosition={0} />
+                      <ChevronRight
+                        scrollRef={timeListRef}
+                        rightPosition={0}
+                        scrollSpeed={200}
+                      />
                     </div>
                   )}
 
@@ -282,9 +334,9 @@ const ServicesItem = (props: servicesItemProps) => {
 
                         handleSaveBooking(
                           {
-                            barbershopId: props.barbershopId,
-                            serviceId: props.service.id,
-                            userId: logedUser.id,
+                            barbershop_id: props.barbershop_id,
+                            service_id: props.service.id,
+                            user_id: logedUser.id,
                             date: newDate,
                           },
                           handleBookingSuccess
