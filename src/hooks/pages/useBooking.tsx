@@ -12,7 +12,7 @@ interface APIErrorResponse {
   message: string;
 }
 
-interface useBookingProps {
+export interface useBookingProps {
   barbershop_id: number;
   service_id: number;
   user_id: number;
@@ -25,7 +25,6 @@ export function useBooking() {
   const [bookingsOfTheDay, setBookingsOfTheDay] = useState<useBookingProps[]>(
     []
   );
-  const [bookings, setBookings] = useState<useBookingProps[]>([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
 
   const handleSaveBooking = async (
@@ -104,20 +103,6 @@ export function useBooking() {
     }
   };
 
-  const getBookings = async (user_id: number) => {
-    try {
-      setLoading(true);
-      //await sleep(1000);
-
-      const response = await api.get(`/bookings/${user_id}`);
-      setBookings(response.data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   //console.log(bookings);
   return {
     loading,
@@ -125,7 +110,5 @@ export function useBooking() {
     getBookingsOfTheDay,
     bookingsOfTheDay,
     bookingsLoading,
-    getBookings,
-    bookings,
   };
 }
