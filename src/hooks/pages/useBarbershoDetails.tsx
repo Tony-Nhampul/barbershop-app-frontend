@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { sleep } from "@/helpers";
+//import { sleep } from "@/helpers";
 import { api } from "@/services/api";
 import { useNavigate } from "react-router-dom";
 
@@ -44,7 +44,7 @@ export function useBarbershopDetails(props: useBarbershopDetailsProps) {
       setBarbershopDetails(response.data);
     } catch (error) {
       console.error(error);
-      //navigate("/");
+      navigate("/");
     } finally {
       setLoading(false);
     }

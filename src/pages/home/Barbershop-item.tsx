@@ -14,7 +14,7 @@ interface BarbershopItemProps {
   };
 }
 
-const BarbershopItem = (barbershop: BarbershopItemProps) => {
+const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
   const { theme } = useTheme();
 
   return (
@@ -35,7 +35,7 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
 
         <div
           className="px-1 w-full h-[160px] rounded-xl bg-cover bg-center relative"
-          style={{ backgroundImage: `url(${barbershop.barbershop.image_url})` }}
+          style={{ backgroundImage: `url(${barbershop.image_url})` }}
         >
           <div className="absolute top-2 left-2 z-10">
             <Badge
@@ -57,7 +57,7 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
 
         <div className="p-2">
           <h2 className="font-bold overflow-hidden text-ellipsis text-nowrap">
-            {barbershop.barbershop.name}
+            {barbershop.name}
           </h2>
           <p className="font-sm text-gray-400 overflow-hidden text-ellipsis text-nowrap">
             <MapPin
@@ -66,7 +66,7 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
                 theme == "light" ? "text-[#8161ff]" : ""
               }`}
             />
-            {barbershop.barbershop.address}
+            {barbershop.address}
           </p>
 
           <Button
@@ -76,7 +76,7 @@ const BarbershopItem = (barbershop: BarbershopItemProps) => {
             }`}
             asChild
           >
-            <Link to={`/barbershop/${barbershop.barbershop.id}`}>Reservar</Link>
+            <Link to={`/barbershop/${barbershop.id}`}>Reservar</Link>
           </Button>
         </div>
       </CardContent>

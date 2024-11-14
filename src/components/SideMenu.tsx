@@ -19,11 +19,10 @@ import { Link } from "react-router-dom";
 import { useLogin } from "@/hooks/pages/useLogin";
 import { useLogout } from "@/hooks/pages/useLogout";
 import { useTheme } from "./theme-provider";
-import { ModeToggle } from "./mode-toggle";
 
 const SideMenu = () => {
   const { logedIn, logedUser } = useLogin();
-  const { handleLogout } = useLogout();
+  const { handleLogout, logoutLoading } = useLogout();
   const { theme } = useTheme();
 
   return (
@@ -83,6 +82,7 @@ const SideMenu = () => {
                     ? "bg-[#EF4343] rounded text-white hover:bg-[#c53232]"
                     : ""
                 }`}
+                disabled={logoutLoading}
               >
                 <LogOut />
               </Button>
@@ -130,7 +130,7 @@ const SideMenu = () => {
               variant={"secondary"}
               asChild
             >
-              <Link to="/a">
+              <Link to="/">
                 <HomeIcon className="mr-2" />
                 Página Inicial
               </Link>
@@ -152,8 +152,6 @@ const SideMenu = () => {
                 </Link>
               </Button>
             )}
-
-            <ModeToggle />
           </div>
         </SheetContent>
       </Sheet>

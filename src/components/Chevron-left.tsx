@@ -4,11 +4,13 @@ import { useTheme } from "./theme-provider";
 interface ChevronLeftProps {
   scrollRef: React.RefObject<HTMLDivElement>;
   leftPosition: number;
+  scrollSpeed: number;
 }
 
 const ChevronLeft: React.FC<ChevronLeftProps> = ({
   scrollRef,
   leftPosition,
+  scrollSpeed,
 }) => {
   const { theme } = useTheme();
 
@@ -20,7 +22,7 @@ const ChevronLeft: React.FC<ChevronLeftProps> = ({
       style={{ left: `${leftPosition}px` }}
       onClick={() => {
         if (scrollRef.current) {
-          scrollRef.current.scrollLeft -= 300;
+          scrollRef.current.scrollLeft -= scrollSpeed;
         }
       }}
     />

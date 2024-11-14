@@ -19,6 +19,7 @@ const Logout = () => {
             ? "bg-[#EF4343] rounded text-white hover:bg-[#c53232]"
             : ""
         }`}
+        disabled={logoutLoading}
       >
         {logoutLoading ? (
           <Loader />

@@ -22,7 +22,7 @@ export function Login() {
   return (
     <div className="flex items-center justify-center absolute right-0 top-0 w-full h-full">
       <div
-        className={`py-8 px-5 max-w-[450px]  mx-auto space-y-6 border rounded-lg shadow-lg shadow-gray-500/40 ${
+        className={`py-8 px-5 min-w-[450px]  max-w-[450px]  mx-auto space-y-6 border rounded-lg shadow-lg shadow-gray-500/40 ${
           theme == "light" ? "border-gray-300 rounded" : ""
         }`}
       >
@@ -115,6 +115,13 @@ export function Login() {
             </form>
           </Form>
         </div>
+
+        <p className="text-[12px]">
+          Ainda não tem uma Conta? Crie a sua Conta grátis
+          <Button className="p-0 ml-1.5 h-0 text-[12px]" variant={"link"}>
+            <a href="/signup">aqui.</a>
+          </Button>
+        </p>
 
         <div>
           <p className="text-[12px]">

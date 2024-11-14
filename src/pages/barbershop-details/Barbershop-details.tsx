@@ -20,7 +20,7 @@ const BarbershopDetails = () => {
   };
 
   return (
-    <>
+    <div className="max-w-6xl mx-auto">
       {loading ? (
         <div className="pt-4">
           <Loader />
@@ -29,14 +29,16 @@ const BarbershopDetails = () => {
         //barbershopDetails && ( // Conditional rendering to check if barbershopDetails is not null
         <>
           <div
-          //className="w-full h-[260px] bg-cover bg-center relative opacity-75"
-          //style={{ backgroundImage: `url(${barbershopDetails?.image_url})` }}
+            //className="w-full h-[260px] bg-cover bg-center relative opacity-75"
+            //style={{ backgroundImage: `url(${barbershopDetails?.image_url})` }}
+            className="relative"
           >
             <img
               src={barbershopDetails?.image_url}
               sizes="100vw"
               className="h-[260px] w-full"
             />
+
             <Button
               size={"icon"}
               variant={"outline"}
@@ -95,12 +97,12 @@ const BarbershopDetails = () => {
           <ServicesItem
             key={index}
             service={service}
-            barbershopId={Number(id)}
+            barbershop_id={Number(id)}
             barbershopName={barbershopDetails.name}
           />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -4,11 +4,13 @@ import { useTheme } from "./theme-provider";
 interface ChevronRightProps {
   scrollRef: React.RefObject<HTMLDivElement>;
   rightPosition: number;
+  scrollSpeed: number;
 }
 
 const ChevronRight: React.FC<ChevronRightProps> = ({
   scrollRef,
   rightPosition,
+  scrollSpeed,
 }) => {
   const { theme } = useTheme();
 
@@ -20,7 +22,7 @@ const ChevronRight: React.FC<ChevronRightProps> = ({
       style={{ right: `${rightPosition}px` }}
       onClick={() => {
         if (scrollRef.current) {
-          scrollRef.current.scrollLeft += 300;
+          scrollRef.current.scrollLeft += scrollSpeed;
         }
       }}
     />

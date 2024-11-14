@@ -24,7 +24,7 @@ const Bookings = () => {
     <>
       <Header />
 
-      <div className="py-6 px-5">
+      <div className="py-6 px-5 max-w-6xl mx-auto">
         <h1 className="text-lg font-bold">Agendamentos</h1>
 
         <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-1">
