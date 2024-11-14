@@ -35,11 +35,19 @@ const Bookings = () => {
           <Loader />
         ) : (
           <>
-            {confirmedBookings.map((booking, index) => (
-              <div className="py-2">
-                <BookingItem key={index} bookingInfo={booking} />
+            {confirmedBookings.length > 0 ? (
+              <>
+                {confirmedBookings.map((booking, index) => (
+                  <div className="py-2">
+                    <BookingItem key={index} bookingInfo={booking} />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="pb-3">
+                <p>Nenhum agendamento Confirmado</p>
               </div>
-            ))}
+            )}
           </>
         )}
 
@@ -51,11 +59,19 @@ const Bookings = () => {
           <Loader />
         ) : (
           <>
-            {finishedBookings.map((booking, index) => (
-              <div className="py-2">
-                <BookingItem key={index} bookingInfo={booking} />
+            {finishedBookings.length > 0 ? (
+              <>
+                {finishedBookings.map((booking, index) => (
+                  <div className="py-2">
+                    <BookingItem key={index} bookingInfo={booking} />
+                  </div>
+                ))}
+              </>
+            ) : (
+              <div className="py-3">
+                <p>Nenhum agendamento Finalizado</p>
               </div>
-            ))}
+            )}
           </>
         )}
       </div>

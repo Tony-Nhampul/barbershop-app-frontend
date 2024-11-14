@@ -1,6 +1,8 @@
 //import { sleep } from "@/helpers";
 import { api } from "@/services/api";
 import { useState } from "react";
+import { toast } from "../use-toast";
+import { sleep } from "@/helpers";
 
 interface Service {
   //id: number;
@@ -47,5 +49,30 @@ export function useBookingInfo() {
     }
   };
 
-  return { loading, getBookings, bookings };
+  const handleDelete = async (
+    booking_id: number,
+    onSuccess: () => void //Callback for the function
+  ) => {
+    try {
+      setLoading(true);
+      await sleep(1000);
+
+      const response = await api.delete(`/bookings/${booking_id}`);
+      const message = response.data.message;
+
+      onSuccess();
+
+      toast({
+        variant: "success",
+        title: "Success.",
+        description: message,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { loading, getBookings, bookings, handleDelete };
 }
