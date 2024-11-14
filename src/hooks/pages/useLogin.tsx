@@ -15,6 +15,13 @@ interface APIErrorResponse {
   message: string;
 }
 
+interface useLoginProps {
+  id: number;
+  name: string;
+  email: string;
+  image: string;
+}
+
 const formSchema = z.object({
   email: z.string().min(5, {
     message: "Email é obrigatório.",
@@ -36,7 +43,7 @@ export function useLogin() {
     return savedLogedIn ? savedLogedIn : false;
   });
 
-  const [logedUser] = useState(() => {
+  const [logedUser] = useState<useLoginProps>(() => {
     const logedUser = sessionStorage.getItem(namePersistAuth);
     return logedUser ? JSON.parse(logedUser) : "";
   });

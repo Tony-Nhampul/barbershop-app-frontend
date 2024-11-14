@@ -6,6 +6,7 @@ import BarbershopDetails from "@/pages/barbershop-details/Barbershop-details";
 import { Navigate } from "react-router-dom";
 import { Login } from "@/pages/login";
 import Bookings from "@/pages/bookings";
+import { Signup } from "@/pages/login/signup";
 
 export const MyRoutes = () => {
   return (
@@ -31,6 +32,15 @@ export const MyRoutes = () => {
         element={
           <PublicRoute>
             <Login />
+          </PublicRoute>
+        }
+      />
+
+      <Route
+        path="/signup"
+        element={
+          <PublicRoute>
+            <Signup />
           </PublicRoute>
         }
       />
