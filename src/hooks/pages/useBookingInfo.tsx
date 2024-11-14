@@ -51,8 +51,11 @@ export function useBookingInfo() {
 
   const handleDelete = async (
     booking_id: number,
+    beforeDelete: () => void,
     onSuccess: () => void //Callback for the function
   ) => {
+    beforeDelete();
+
     try {
       setLoading(true);
       await sleep(1000);

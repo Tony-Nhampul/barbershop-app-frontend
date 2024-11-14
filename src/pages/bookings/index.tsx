@@ -51,15 +51,15 @@ const Bookings = () => {
           </>
         )}
 
-        <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-1">
-          Finalizados
-        </h2>
-
-        {loading ? (
-          <Loader />
-        ) : (
+        {finishedBookings.length > 0 && (
           <>
-            {finishedBookings.length > 0 ? (
+            <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-1">
+              Finalizados
+            </h2>
+
+            {loading ? (
+              <Loader />
+            ) : (
               <>
                 {finishedBookings.map((booking, index) => (
                   <div className="py-2">
@@ -67,10 +67,6 @@ const Bookings = () => {
                   </div>
                 ))}
               </>
-            ) : (
-              <div className="py-3">
-                <p>Nenhum agendamento Finalizado</p>
-              </div>
             )}
           </>
         )}

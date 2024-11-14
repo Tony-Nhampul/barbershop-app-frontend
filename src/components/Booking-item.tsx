@@ -17,15 +17,30 @@ import {
 import { Button } from "./ui/button";
 import Loader from "./Loader";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const BookingItem = ({ bookingInfo }: bookingItemProps) => {
   const { theme } = useTheme();
   const pastBooking = isPast(bookingInfo.date);
   const { handleDelete, loading } = useBookingInfo();
   const [bookingInfoSheet, setBookingInfoSheet] = useState(false);
+  const [bookingDeleteDialog, setBookingDeleteDialog] = useState(false);
 
   const onDeleteBookingSuccess = () => {
     setBookingInfoSheet(false);
+  };
+
+  const beforeDelete = () => {
+    setBookingDeleteDialog(false);
   };
 
   return (
@@ -201,22 +216,74 @@ const BookingItem = ({ bookingInfo }: bookingItemProps) => {
             </Button>
           </SheetClose>
 
-          <Button
-            className={`w-full ${
-              theme == "light"
-                ? "bg-[#ef4343] hover:bg-[#ad2f2f] rounded text-white"
-                : ""
-            }`}
-            variant={"destructive"}
-            disabled={pastBooking || loading}
-            onClick={() => handleDelete(bookingInfo.id, onDeleteBookingSuccess)}
+          <Dialog
+            open={bookingDeleteDialog}
+            onOpenChange={setBookingDeleteDialog}
           >
-            {loading ? (
-              <Loader />
-            ) : (
-              <>{<Trash2 className="w-4 h-4" />} Cancelar Reserva</>
-            )}
-          </Button>
+            <DialogTrigger asChild>
+              <Button
+                className={`w-full ${
+                  theme == "light"
+                    ? "bg-[#ef4343] hover:bg-[#ad2f2f] rounded text-white"
+                    : ""
+                }`}
+                variant={"destructive"}
+                disabled={pastBooking || loading}
+              >
+                {loading ? (
+                  <Loader />
+                ) : (
+                  <>{<Trash2 className="w-4 h-4" />} Cancelar Reserva</>
+                )}
+              </Button>
+            </DialogTrigger>
+
+            <DialogContent
+              className={`sm:max-w-[425px] w-[90%] ${
+                theme == "light" ? "bg-white border-gray-300 rounded" : ""
+              }`}
+            >
+              <DialogHeader>
+                <DialogTitle>Cancelando Reserva</DialogTitle>
+                <DialogDescription>
+                  Tem certeza que deseja cancelar a Reserva?
+                </DialogDescription>
+              </DialogHeader>
+
+              <DialogFooter className="flex flex-row gap-3">
+                <DialogClose className="w-full">
+                  <Button
+                    className={`w-full ${
+                      theme == "light"
+                        ? "bg-gray-300 rounded hover:bg-gray-400"
+                        : ""
+                    }`}
+                    variant="secondary"
+                  >
+                    Fechar
+                  </Button>
+                </DialogClose>
+
+                <Button
+                  className={`w-full ${
+                    theme == "light"
+                      ? "bg-[#ef4343] hover:bg-[#ad2f2f] rounded text-white"
+                      : ""
+                  }`}
+                  variant={"destructive"}
+                  onClick={() =>
+                    handleDelete(
+                      bookingInfo.id,
+                      beforeDelete,
+                      onDeleteBookingSuccess
+                    )
+                  }
+                >
+                  Confirmar
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </CardFooter>
       </SheetContent>
     </Sheet>
