@@ -43,4 +43,11 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  .app-container {
+    @apply flex flex-col min-h-screen;
+  }
+  .content-container {
+    @apply flex-1;
+  }
 }

@@ -10,7 +10,6 @@ import { useLogin } from "@/hooks/pages/useLogin";
 import ChevronLeft from "@/components/Chevron-left";
 import ChevronRight from "@/components/Chevron-right";
 import { useBookingInfo } from "@/hooks/pages/useBookingInfo";
-import Footer from "@/components/Footer";
 
 const Home = () => {
   const { barbershops } = useBarbershop();
@@ -124,8 +123,6 @@ const Home = () => {
         </div>
         {/* Populares */}
       </div>
-
-      <Footer />
     </>
   );
 };
