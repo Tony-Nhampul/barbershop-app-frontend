@@ -35,12 +35,12 @@ export function useBookingInfo() {
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
 
-  const getBookings = async (user_id: number) => {
+  const getBookings = async () => {
     try {
       setLoading(true);
       //await sleep(1000);
 
-      const response = await api.get(`/bookings/${user_id}`);
+      const response = await api.get("/bookings");
       setBookings(response.data);
     } catch (error) {
       console.error(error);

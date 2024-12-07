@@ -19,9 +19,9 @@ const Home = () => {
   const { getBookings, bookings } = useBookingInfo();
 
   useEffect(() => {
-    getBookings(logedUser.id);
+    getBookings();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [logedUser.id]);
+  }, []);
 
   return (
     <>

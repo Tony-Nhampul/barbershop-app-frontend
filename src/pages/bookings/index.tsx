@@ -3,17 +3,16 @@ import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 
 import { useBookingInfo } from "@/hooks/pages/useBookingInfo";
-import { useLogin } from "@/hooks/pages/useLogin";
 import { isFuture, isPast } from "date-fns";
 import { useEffect } from "react";
 
 const Bookings = () => {
   const { loading, getBookings, bookings } = useBookingInfo();
-  const { logedUser } = useLogin();
 
   useEffect(() => {
-    getBookings(logedUser.id);
-  }, [logedUser.id]);
+    getBookings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const confirmedBookings = bookings.filter((booking) =>
     isFuture(booking.date)
@@ -38,8 +37,8 @@ const Bookings = () => {
             {confirmedBookings.length > 0 ? (
               <>
                 {confirmedBookings.map((booking, index) => (
-                  <div className="py-2">
-                    <BookingItem key={index} bookingInfo={booking} />
+                  <div className="py-2" key={index}>
+                    <BookingItem bookingInfo={booking} />
                   </div>
                 ))}
               </>
@@ -62,8 +61,8 @@ const Bookings = () => {
             ) : (
               <>
                 {finishedBookings.map((booking, index) => (
-                  <div className="py-2">
-                    <BookingItem key={index} bookingInfo={booking} />
+                  <div className="py-2" key={index}>
+                    <BookingItem bookingInfo={booking} />
                   </div>
                 ))}
               </>
