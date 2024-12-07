@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import Header from "../../components/Header";
 import { ptBR } from "date-fns/locale";
-import Search from "./Search";
+import Search from "../../components/Search";
 import BookingItem from "@/components/Booking-item";
 import { useBarbershop } from "@/hooks/pages/useBarbershops";
 import BarbershopItem from "./Barbershop-item";
@@ -20,6 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     getBookings(logedUser.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logedUser.id]);
 
   return (
@@ -80,7 +81,9 @@ const Home = () => {
               className="flex gap-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden "
             >
               {barbershops.map((barbershop, index) => (
-                <BarbershopItem key={index} barbershop={barbershop} />
+                <div key={index} className="min-w-[167px] max-w-[167px]">
+                  <BarbershopItem key={index} barbershop={barbershop} />
+                </div>
               ))}
             </div>
 
@@ -110,7 +113,9 @@ const Home = () => {
               className="flex gap-4 overflow-x-auto scroll-smooth [&::-webkit-scrollbar]:hidden "
             >
               {barbershops.map((barbershop, index) => (
-                <BarbershopItem key={index} barbershop={barbershop} />
+                <div key={index} className="min-w-[167px] max-w-[167px]">
+                  <BarbershopItem key={index} barbershop={barbershop} />
+                </div>
               ))}
             </div>
 

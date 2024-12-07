@@ -27,15 +27,17 @@ const formSchema = z.object({
     }),
 });
 
-const Search = () => {
+interface SearchProps {
+  defaultValues?: z.infer<typeof formSchema>;
+}
+
+const Search = ({ defaultValues }: SearchProps) => {
   const { theme } = useTheme();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      search: "",
-    },
+    defaultValues,
   });
 
   const handleSearch = (data: z.infer<typeof formSchema>) => {
